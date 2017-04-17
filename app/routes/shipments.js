@@ -33,7 +33,7 @@ router.post('/shipper/:shipperid/rates', (req, res, next) => {
         'postal-code': 'V4M1P4'
     };
     cache.get(res.app.locals.usershipper)
-        .then((shipper) => shipper.getRates(body))
+        .then((shipper) => shipper.getRates(req.body))
         .then(rates => res.status(200).json(rates))
         .catch(next);
 });

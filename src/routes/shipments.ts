@@ -51,7 +51,7 @@ router.post('/shipper/:shipperid/rates', (req, res, next) => {
 
     // Retrieve the User's Shipper from the LRU cache and then use it to getRates
     cache.get(res.app.locals.usershipper)
-        .then((shipper: Shipper) => shipper.getRates(body))
+        .then((shipper: Shipper) => shipper.getRates(req.body))
         .then(rates => res.status(200).json(rates))
         .catch(next);
 });
