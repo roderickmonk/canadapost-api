@@ -14,7 +14,7 @@ This repository forms part of a wider professional software engineering portfoli
 ## Theory of Operation
 
 ### JWT Tokens
-The demonstration software does not have a concept of a <b>User</b>.  However, it does embody the concept of <b>Credential Tokens</b>.  Such tokens are used to retrieve from Canada Post the full set of unique credentials (username, password, and contract number) which are required to exploit the services of the API.
+This demonstration software does not have a concept of a <b>User</b>.  However, it does embody the concept of <b>Credential Tokens</b>.  Such tokens are used to retrieve from Canada Post the full set of unique credentials (username, password, and contract number) which are required to exploit the services of the API.
 
 Clearly, the secure delivery of these Credential Tokens is critical.  For this reason, these tokens are delivered via JWT and then decoded by endpoint processing (which requires knowledge of a 'JWT Secret').
 
