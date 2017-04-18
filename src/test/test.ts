@@ -19,6 +19,7 @@ describe('Test Case', () => {
 		chai.request(server)
 			.post('/shipper/canadapost/rates')
 			.set('x-auth', jwt.encode({ registrationToken: randomInteger() }, JWT_SECRET))
+			// Define a minimum set of params (weight, origin post code, and destination post code)
 			.send({
 				weight: 1,
 				'origin-postal-code': 'V3Z4R3',
