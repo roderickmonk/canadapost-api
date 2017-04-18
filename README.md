@@ -30,7 +30,7 @@ This demonstration software is not exploting the services of a database.
 ## Adding Shippers
 The software is designed to require minimum effort to extend the suite of Shipper APIs.  Adding a further Shipper requires only the following:
 <ul>
-<li>Adding a the new Shipper API software to the src/shippers/ folder, which must be derived from the Shipper class (which can be found in the source file shipper.ts).</li>
+<li>Add the new shipper class to the src/shippers/ folder; the new shipper class must be derived from the Shipper class (which can be found in the source file shipper.ts).</li>
 <li>Include the new Shipper in the Shipper Id to Shipper class object map, located in the file src/shippers/shippers.ts.</li>
 </ul>
 
