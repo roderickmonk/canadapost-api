@@ -14,18 +14,25 @@ This repository forms part of a wider professional software engineering portfoli
 ## Theory of Operation
 
 ### JWT Tokens
-The demo software does not refer to the concept of a <b>User</b>.  However, it does embody the concept of <b>Credential Tokens</b>.  These tokens are used to retrieve from Canada Post the unique full set of credentials (username, password, and contract number) which are required to exploit the services of the Canada Post API.  Management of these Credential Tokens are assumed to be managed by other software.
+The demonstration software does not have a concept of a <b>User</b>.  However, it does embody the concept of <b>Credential Tokens</b>.  Such tokens are used to retrieve from Canada Post the full set of unique credentials (username, password, and contract number) which are required to exploit the services of the API.
 
-Clearly, the secure delivery of these Credential Tokens is important.  For this reason, these tokens are delivered via JWT and then decoded by endpoint processing (which requires knowledge of a 'JWT Secret').
+Clearly, the secure delivery of these Credential Tokens is critical.  For this reason, these tokens are delivered via JWT and then decoded by endpoint processing (which requires knowledge of a 'JWT Secret').
 
 ### Least Recently Used Cache
-The demo software assumes that if a User is active, then they will continue to be active for some time.  Hence, rather than continually poll the Canada Post API for the full set of credentials, these credentials are maintained in a local cache and purged from the cache in a LRU manner.  The npm component <b>lru-cache</b> provides this service.
+The demo software assumes that if a User is active, then they will continue to be active for some time.  Hence, rather than continually polling the Canada Post API for the full set of credentials on each API request, these credentials are maintained in a local cache and purged from the cache in a LRU manner.  The npm component [lru-cache](https://www.npmjs.com/package/lru-cache) provides this service.
 
 ### Fedex / UPS
 The Canada Post API is the prime focus, however, in order to provide a measure of realism, two further Shippers are also 'supported'.  However, both the Fedex and UPS APIs are spoofs in that both are derived from the Canada Post class.
 
 ### Database
 This demonstration software is not exploting the services of a database.
+
+## Adding Shippers
+The software is designed to require minimum effort to extend the suite of Shipper APIs.  Adding a further Shipper requires only the following:
+<ul>
+<li>Adding a the new Shipper API software to the src/shippers/ folder, which must be derived from the Shipper class (which can be found in the source file shipper.ts).</li>
+<li>Include the new Shipper in the Shipper Id to Shipper class object map, located in the file src/shippers/shippers.ts.</li>
+</ul>
 
 ## Testing
 It is assumed at the outset that both NodeJS and Typescript are already installed.  After cloning the project, it can be tested as follows:
