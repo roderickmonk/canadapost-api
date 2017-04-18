@@ -27,7 +27,7 @@ router.use((req, res, next) => {
     };
     if (!cache.has(res.app.locals.usershipper)) {
         cache.set(res.app.locals.usershipper)
-            .then(() => next())
+            .then(next)
             .catch(err => errorHandler(err, req, res, next));
     }
 });

@@ -39,7 +39,7 @@ router.use((req, res, next) => {
 
         // Ensure that the User's Shipper is available in the LRU cache
         cache.set(res.app.locals.usershipper)
-            .then(() => next())
+            .then(next)
             .catch(err => errorHandler(err, req, res, next));
     }
 });
