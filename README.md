@@ -40,8 +40,7 @@ It is assumed at the outset that both NodeJS and Typescript are already installe
 cd canadapost-api
 npm install
 tsc  # Transpile the source code
-cd app
-mocha
+mocha app/test
 ```
 ## File Structure
 ```
