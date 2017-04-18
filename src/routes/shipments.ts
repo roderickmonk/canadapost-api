@@ -3,7 +3,6 @@ import * as express from 'express';
 import { Shipper } from '../shippers/shipper';
 import * as jwt from 'jwt-simple';
 import { ApiError } from '../api-error';
-import { UserShipperInterface } from '../interfaces';
 import { UserShipperCache } from '../lru-cache';
 import { JWT_SECRET } from '../jwt-secret';
 
