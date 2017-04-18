@@ -1,0 +1,19 @@
+import * as express from 'express';
+import * as bodyParser from 'body-parser';
+const winston = require ('winston');
+
+const app = express();
+
+const routes = require('./routes/');
+const PORT = process.env.PORT || 8080;
+const SERVER_URL = process.env.SERVER_URL || 'http://localhost';
+
+app.use(bodyParser.json());
+
+routes.set(app);
+
+app.listen(PORT, () => {
+  winston.info(`App listening on ${SERVER_URL}:${PORT}`);
+});
+
+module.exports = app;
