@@ -1,54 +1,44 @@
 # Canada Post API
-The site is running at https://ttc-website-ng2.herokuapp.com.  The JS framework being used is Angular 2.0 (ng2) with NodeJS / Express providing the backend services.  MongoDB 3.2 provides the database services.  This repository forms part of a wider professional software engineering portfolio maintained by Rod Monk.  This repo is NOT the complete source code, as certain key information has been removed.  Nevertheless, to the maximum extent possible this repo is a close approximation of the source code.  It is currently actively being upgraded as noted in the ToDo list found below.<br>
+This repository forms part of a wider professional software engineering portfolio maintained by Rod Monk.  Here demonstration code is provided that exercises Canada Post's development API. The following end points are exercised: getRates, createNonContractShipment, and getArtifact.
+
+## Technologies
+<ol>
+<li>NodeJS</li>
+<li>ExpressJS</li>
+<li>Typescript</li>
+<li>JSON Web Tokens (JWT)</li>
+<li>Mocha</li>
+<li>A Least Recently Used component to manage active shipping objects</li>
+</ol>
+
 ## Theory of Operation
-<b>Technical Notes</b>
-The following notes provides some summary notes concerning the technologies being employed.
-<ol>
-<li><b>ES6</b>: Every attempt is made to maximally exercise Javascript ES6 features.</li>
-<li><b>FP</b>: A similar statement can be made about the Functional Programming style, partly using FP features built into ES6 and partly via the use of lodash.</li>
-<li><b>FRP</b>: The client side code is using RxJS which supports Functional Reactive Programming and, again, where RxJS can be used instead of something else, RxJS is preferred.</li>
-<li><b>socketio</b>: Not all communications with the server are using HTTP.</li>
-<li>To provide all of the content that the legacy 'static' website ('Home page', 'How to Find Us', 'Calendar', 'News', 'About Us', 'Contact Us', etc.</li>
-<li>To be secure (see <b>Security</b> below).</li>
-<li>To be responsive (thru the use of BootStrap)</li>
-<li>To demonstrate the use of REST-ful design principles in the crafting of the API end-points.
-<li>Allow members to 'Login'.</li>
-<li>Allow members to securely 'reset' their password.</li>
-<li>Allow members to securely search the Membership contacts details (once logged in).</li>
-<li>Allow the membership to modify their own profile details.</li>
-<li>Allow the members to change their password.</li>
-<li>Provide an application form for new members.</li>
-<li>A means for existing members to renew their membership.</li>
-<li>A means to distinguish executive members (who are given an extra range of privileges).</li>
-<li>ToDo: A means for the membership to review historical eBlasts.</li>
-<li>ToDo: A new <b>TennisBC Export</b> function: this will allow a member of the executive to export the membership list to TennisBC (required once per year).</li>
-<li>A <b>Fee Accounting</b> function: When applying, will allow a member to specify other members within the same family; this feature will allow the site to auto-determine each family's yearly fees.</li>
-<li>A <b>Document Management</b> function: members of the executive will be able to add documents to a document repository (e.g. minutes of meetings, club bylaws, etc.).  The general membership will be able to view these documents.</li>
-<li>A <b>News Item Management</b> function: members of the executive will be able to add news items to the website (typically club successes in league play).  The general membership will be able to view these news items.  A news item consists of text and pictures.  They are to be displayed in the website in reverse chronological order.</li>
-<li>A technical interface to FogBugz which will automatically record software failures (FogBugz is an issue tracking system).</li>
-</ol>
 
-<h4>Technologies</h4>
-NodeJS, Express, Angular2, Bootstrap, MongoDB, Mongoose, Git, GitHub, Wepback, Gulp, and several npm packages (jwt-simple, bcrypt, async, gridfs-stream, moment, lodash, express-session, and several others).
+### JWT Tokens
+The demo software does not refer to the concept of a <b>User</b>, it does, however, embody the concept of <b>Credential Tokens</b>.  These tokens are used to retrieve from Canada Post the unique full set of credentials (username, password, and contract number) which are required to exploit the services of the Canada Post API.  Management of these Credential Tokens are assumed to be managed by other software.
 
-<h4>Database</h4>
-MongoDB available via MongoLab.
+Clearly, the secure delivery of these Credential Tokens is important.  For this reason, these tokens are delivered via JWT and then decoded by endpoint processing (which requires knowledge of a 'JWT Secret').
 
-<h4>Server</h4>
-Currently running on a Heroku servelet.
+### Least Recently Used Cache
+The demo software assumes that if a User is active, then they will continue to be active for some time.  Hence, rather than continually poll the Canada Post API for the full set of credentials, these credentials are maintained in a local cache and purged from the cache in a LRU manner.  The npm component <b>lru-cache</br> provides this service.
 
-<h4>Security</h4>
-<ol>
-<li>Passwords are hashed (bcrypt) and stored to the database, along with the member's other details.</li>
-<li>SSL is assumed throughout.</li>
-<li>Session Management</li>
-<ul>
-<li>Users are identified using JSON Web Tokens (JWT); these are encrypted and not decodable when saved in Local Storage.</li>
-<li>Independently of JWT usage, typical session management is active.  Session tokens time-out periodically and the user is then required to re-Login.</li>
-<li>The client-side software prohibits users from accessing functions to which they are not authorized to use.  Nevertheless, at the server, further role-based checks are applied before executing an API endpoint.</li>
-</ul>
-</ol>
-<h4>File Structure</h4>
+### Fedex / UPS
+The Canada Post API is the prime focus, however, in order to provide a measure of realism, two further Shippers are also 'supported'.  However, both the Fedex and UPS APIs are spoofs in that both are derived from the Canada Post class.
+
+### Database
+This demonstration software is not exploting the services of a database.
+
+# Test
+Test code has been provided and can be run as follows.  After cloning the project to a home directory, it can be tested as follows:
+```bash
+cd canadapost-api
+npm install
+cd app
+mocha
+```
+
+
+
+# File Structure</h4>
 
 ```
 ttc-website-ng2/
