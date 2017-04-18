@@ -35,7 +35,7 @@ The software is designed to require minimum effort to extend the suite of Shippe
 </ul>
 
 ## Testing
-It is assumed at the outset that both NodeJS and Typescript are already installed.  After cloning the project, it can be tested as follows:
+It is assumed that both NodeJS and Typescript are already installed.  After cloning the project, it can be tested as follows:
 ```bash
 cd canadapost-api
 npm install
