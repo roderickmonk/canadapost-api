@@ -9,9 +9,6 @@ import { Shipper } from '../shipper';
 export class CanadaPost extends Shipper {
 
 	private customerNumber: string;
-	private contract = false;
-	private contractId = 0;
-	private originPostalCode: string;
 	private endpoint = 'https://ct.soa-gw.canadapost.ca';
 
 	constructor(credentials) {
