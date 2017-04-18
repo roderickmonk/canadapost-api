@@ -59,6 +59,6 @@ export class CanadaPost extends Shipper {
 				}))
 			.then(xml2js);
 
-	public getLabel = (uri) => request.get({ uri, headers: { 'Accept': 'application/pdf', 'Authorization': this.authorization } });
+	public getArtifact = (uri) => request.get({ uri, headers: { 'Accept': 'application/pdf', 'Authorization': this.authorization } });
 
 }

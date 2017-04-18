@@ -28,6 +28,7 @@
     "xml2js-es6-promise": "^1.1.1"
   },
   "devDependencies": {
+    "@types/mocha": "^2.2.41",
     "@types/node": "^7.0.12",
     "body-parser": "^1.17.1",
     "chai": "^3.5.0",

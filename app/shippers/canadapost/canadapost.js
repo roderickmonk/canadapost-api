@@ -31,7 +31,7 @@ class CanadaPost extends shipper_1.Shipper {
             body
         }))
             .then(xml2js);
-        this.getLabel = (uri) => request.get({ uri, headers: { 'Accept': 'application/pdf', 'Authorization': this.authorization } });
+        this.getArtifact = (uri) => request.get({ uri, headers: { 'Accept': 'application/pdf', 'Authorization': this.authorization } });
         this.customerNumber = credentials.customerNumber;
         this.authorization = 'Basic ' + new Buffer(credentials.username + ':' + credentials.password).toString('base64');
     }

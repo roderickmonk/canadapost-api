@@ -1,7 +1,8 @@
 
 import * as chai from 'chai';
 import * as chaiHttp from 'chai-http';
-//let chaiHttp = require('chai-http');
+import * as jwt from 'jwt-simple';
+import { JWT_SECRET } from '../jwt-secret';
 let server = require('../app.js');
 let should = chai.should();
 let expect = chai.expect;
@@ -9,22 +10,48 @@ let chai_assert = require('chai').assert;
 
 chai.use(chaiHttp);
 
+const randomInteger = () => Math.floor(100000000 * Math.random());
+
 describe('Test Case', () => {
 
-	it('getRates', (done: any) => {
+	it('getRates', () => new Promise((resolve, reject) =>
+
 		chai.request(server)
 			.post('/shipper/canadapost/rates')
+			.set('x-auth', jwt.encode({ registrationToken: randomInteger() }, JWT_SECRET))
 			.send({
 				weight: 1,
 				'origin-postal-code': 'V3Z4R3',
 				'postal-code': 'V4M1P4'
 			})
-			.then((res: any) => {
+			.then(res => { res.should.have.status(200); resolve(); })
+			.catch(reject)));
+
+	let artifactLink: string;
+
+	it('createNonContractShipment', () => new Promise((resolve, reject) =>
+
+		chai.request(server)
+			.post('/shipper/canadapost/shipment')
+			.set('x-auth', jwt.encode({ registrationToken: randomInteger() }, JWT_SECRET))
+			.send(testCreateNonContractShipment)
+			.then(res => {
 				res.should.have.status(200);
-				done();
+
+				// Record the following for use in the next test
+				artifactLink = res.body['non-contract-shipment-info']['links'][0]['link'].find(link => link['$'].rel == 'label')['$'].href;
+				resolve();
 			})
-			.catch(done);
-	});
+			.catch(reject)));
+
+	it('getArtifact', () => new Promise((resolve, reject) =>
+
+		chai.request(server)
+			.get('/shipper/canadapost/artifact')
+			.set('x-auth', jwt.encode({ registrationToken: randomInteger() }, JWT_SECRET))
+			.send({ artifactLink })
+			.then(res => { res.should.have.status(200); resolve(); })
+			.catch(reject)));
 });
 
 const testCreateNonContractShipment = {

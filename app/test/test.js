@@ -1,26 +1,42 @@
 "use strict";
 const chai = require("chai");
 const chaiHttp = require("chai-http");
+const jwt = require("jwt-simple");
+const jwt_secret_1 = require("../jwt-secret");
 let server = require('../app.js');
 let should = chai.should();
 let expect = chai.expect;
 let chai_assert = require('chai').assert;
 chai.use(chaiHttp);
+const randomInteger = () => Math.floor(100000000 * Math.random());
 describe('Test Case', () => {
-    it('getRates', (done) => {
-        chai.request(server)
-            .post('/shipper/canadapost/rates')
-            .send({
-            weight: 1,
-            'origin-postal-code': 'V3Z4R3',
-            'postal-code': 'V4M1P4'
-        })
-            .then((res) => {
-            res.should.have.status(200);
-            done();
-        })
-            .catch(done);
-    });
+    it('getRates', () => new Promise((resolve, reject) => chai.request(server)
+        .post('/shipper/canadapost/rates')
+        .set('x-auth', jwt.encode({ registrationToken: randomInteger() }, jwt_secret_1.JWT_SECRET))
+        .send({
+        weight: 1,
+        'origin-postal-code': 'V3Z4R3',
+        'postal-code': 'V4M1P4'
+    })
+        .then(res => { res.should.have.status(200); resolve(); })
+        .catch(reject)));
+    let artifactLink;
+    it('createNonContractShipment', () => new Promise((resolve, reject) => chai.request(server)
+        .post('/shipper/canadapost/shipment')
+        .set('x-auth', jwt.encode({ registrationToken: randomInteger() }, jwt_secret_1.JWT_SECRET))
+        .send(testCreateNonContractShipment)
+        .then(res => {
+        res.should.have.status(200);
+        artifactLink = res.body['non-contract-shipment-info']['links'][0]['link'].find(link => link['$'].rel == 'label')['$'].href;
+        resolve();
+    })
+        .catch(reject)));
+    it('getArtifact', () => new Promise((resolve, reject) => chai.request(server)
+        .get('/shipper/canadapost/artifact')
+        .set('x-auth', jwt.encode({ registrationToken: randomInteger() }, jwt_secret_1.JWT_SECRET))
+        .send({ artifactLink })
+        .then(res => { res.should.have.status(200); resolve(); })
+        .catch(reject)));
 });
 const testCreateNonContractShipment = {
     "non-contract-shipment": {

@@ -3,7 +3,7 @@ class Shipper {
     constructor() {
         this.getRates = (params) => { };
         this.createShipment = (params) => { };
-        this.getLabel = (uri) => { };
+        this.getArtifact = (uri) => { };
     }
 }
 exports.Shipper = Shipper;
