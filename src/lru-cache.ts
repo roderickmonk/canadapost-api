@@ -13,7 +13,9 @@ export class UserShipperCache {
 
 	public set = (userShipper: UserShipperInterface) => new Promise((resolve, reject) => {
 
+		// Ensure that the Shipper Id is known
 		if (Shippers.hasOwnProperty(userShipper.shipper)) {
+			// Get the User's credentials for the selected Shipper
 			Shippers[userShipper.shipper].getCredentials(userShipper.registrationToken)
 				.then(credentials => {
 					this.lru.set(userShipper, new Shippers[userShipper.shipper](credentials));
