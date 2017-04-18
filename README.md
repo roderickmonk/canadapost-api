@@ -1,5 +1,5 @@
 # Canada Post API
-This repository forms part of a wider professional software engineering portfolio maintained by Rod Monk.  Here demonstration code is provided that exercises Canada Post's development API. The following end points are exercised: getRates, createNonContractShipment, and getArtifact.  You can find more about the [Canada Post API here](https://www.canadapost.ca/cpo/mc/business/productsservices/developers/services/onestepshipping/default.jsf). 
+This repository forms part of a wider professional software engineering portfolio maintained by Rod Monk.  Here demonstration code is provided that exercises Canada Post's development API. The following end points are exercised: [getRates](https://www.canadapost.ca/cpo/mc/business/productsservices/developers/services/rating/getrates/default.jsf), [createNonContractShipment](https://www.canadapost.ca/cpo/mc/business/productsservices/developers/services/onestepshipping/createshipment.jsf), and [getArtifact](https://www.canadapost.ca/cpo/mc/business/productsservices/developers/services/shippingmanifest/shipmentartifact.jsf).  You can find more about the [Canada Post API here](https://www.canadapost.ca/cpo/mc/business/productsservices/developers/services/onestepshipping/default.jsf). 
 
 ## Technologies
 <ol>
