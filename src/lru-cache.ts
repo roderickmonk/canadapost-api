@@ -11,7 +11,7 @@ export class UserShipperCache {
 
 	constructor() { }
 
-	public set = (userShipper: UserShipperInterface) => new Promise((resolve, reject) => {
+	public set = (userShipper: UserShipperInterface): Promise<any> => new Promise((resolve, reject) => {
 
 		// Ensure that the Shipper Id is known
 		if (Shippers.hasOwnProperty(userShipper.shipper)) {
@@ -23,11 +23,11 @@ export class UserShipperCache {
 				})
 		}
 		else {
-			reject (new ApiError ('Unknown Shipper', 400));
+			reject(new ApiError('Unknown Shipper', 400));
 		}
 	})
 
-	public get = (userShipper: UserShipperInterface) => new Promise((resolve, reject) => {
+	public get = (userShipper: UserShipperInterface): Promise<any> => new Promise((resolve, reject) => {
 		const shipper = this.lru.get(userShipper);
 		if (_.isUndefined(shipper)) {
 			reject(new ApiError('Cache entry unavailable'));
@@ -36,5 +36,5 @@ export class UserShipperCache {
 		}
 	});
 
-	public has = (userShipper: UserShipperInterface) => this.lru.has(userShipper);
+	public has = (userShipper: UserShipperInterface): boolean => this.lru.has(userShipper);
 }

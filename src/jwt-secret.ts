@@ -1,1 +1,1 @@
-export const JWT_SECRET = "a-machool-super-secret";
+export const JWT_SECRET = "a-super-secret";
