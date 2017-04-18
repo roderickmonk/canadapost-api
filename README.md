@@ -71,9 +71,9 @@ canadapost-api/
 │   ├── lru-cache.ts                    * Manages the onboard Shipper objects and will retrieve new credentials if required.
 │   │
 │   └── test/                           * Test code folder
-│       └──test.ts                      * Test code to exercise the API
+│       └── test.ts                     * Test code to exercise the API
 │   
-├── package.json                        * JavaScript dependencies
+├── package.json                        * Project dependencies
 ├── README.md                           * This file
 ├── tsconfig.json                       * Configures the TypeScript compiler
 ```
