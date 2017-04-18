@@ -43,29 +43,29 @@ canadapost-api/
 │
 ├── src/                                * Typescript source code
 │   ├── routes/                         * ExpressJS routing
-│   │    └──test.ts              		* Test code to exercise the API
+│   │    └──test.ts                     * Test code to exercise the API
 │   │
 │   ├── shippers/                       * ExpressJS routing
-│   │    ├── shipper.ts              	* Base class from which all Shippers are derived
+│   │    ├── shipper.ts                 * Base class from which all Shippers are derived
 │   │    │
-│   │    ├── shippers.ts              	* Object map from Shipper Id to Shipper class name
+│   │    ├── shippers.ts                * Object map from Shipper Id to Shipper class name
 │   │    │
-│   │    ├── canadapost/              	* Canada Post
+│   │    ├── canadapost/                * Canada Post
 │   │    │    ├── canadapost.ts         * Canada Post API code
-│   │    │    └── XML.ts            	* XML template literals
+│   │    │    └── XML.ts                * XML template literals
 │   │    │
-│   │    ├── fedex/              		* Fedex API
-│   │    │    └── fedex.ts         		* Spoof code: simply derived from the Canada Post class
+│   │    ├── fedex/                     * Fedex API
+│   │    │    └── fedex.ts              * Spoof code: simply derived from the Canada Post class
 │   │    │
-│   │    └── ups/              			* UPS API
-│   │         └── ups.ts         		* Spoof code: simply derived from the Canada Post class
+│   │    └── ups/                       * UPS API
+│   │         └── ups.ts                * Spoof code: simply derived from the Canada Post class
 │   │
-│   ├── api-error.ts                 	* Class ApiError
+│   ├── api-error.ts                    * Class ApiError
 │   ├── interfaces.ts                   * Typescript interfaces
 │   ├── lru-cache.ts                    * Manages the onboard Shipper objects and will retrieve new credentials if required.
 │   │
 │   └── test/                           * Server test folder
-│       └──test.ts              		* Test code to exercise the API
+│       └──test.ts                      * Test code to exercise the API
 │   
 ├── package.json                        * JavaScript dependencies
 ├── README.md                           * This file
