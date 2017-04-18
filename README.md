@@ -1,5 +1,5 @@
 # Canada Post API
-This repository forms part of a wider professional software engineering portfolio maintained by Rod Monk.  Here demonstration code is provided that exercises Canada Post's development API. The following end points are exercised: [Get Rates](https://www.canadapost.ca/cpo/mc/business/productsservices/developers/services/rating/getrates/default.jsf), [Create NonContract Shipment](https://www.canadapost.ca/cpo/mc/business/productsservices/developers/services/onestepshipping/createshipment.jsf), and [Get Artifact](https://www.canadapost.ca/cpo/mc/business/productsservices/developers/services/shippingmanifest/shipmentartifact.jsf).  You can find more about the [Canada Post API here](https://www.canadapost.ca/cpo/mc/business/productsservices/developers/services/onestepshipping/default.jsf). 
+This repository forms part of a wider professional software engineering portfolio maintained by Rod Monk.  Here demonstration code is provided that exercises Canada Post's development API. The following end points are exercised: [Get Rates](https://www.canadapost.ca/cpo/mc/business/productsservices/developers/services/rating/getrates/default.jsf), [Create Non-Contract Shipment](https://www.canadapost.ca/cpo/mc/business/productsservices/developers/services/onestepshipping/createshipment.jsf), and [Get Artifact](https://www.canadapost.ca/cpo/mc/business/productsservices/developers/services/shippingmanifest/shipmentartifact.jsf).  You can find more about the [Canada Post API here](https://www.canadapost.ca/cpo/mc/business/productsservices/developers/services/onestepshipping/default.jsf). 
 
 ## Technologies
 <ol>
@@ -19,7 +19,7 @@ The demo software does not refer to the concept of a <b>User</b>, it does, howev
 Clearly, the secure delivery of these Credential Tokens is important.  For this reason, these tokens are delivered via JWT and then decoded by endpoint processing (which requires knowledge of a 'JWT Secret').
 
 ### Least Recently Used Cache
-The demo software assumes that if a User is active, then they will continue to be active for some time.  Hence, rather than continually poll the Canada Post API for the full set of credentials, these credentials are maintained in a local cache and purged from the cache in a LRU manner.  The npm component <b>lru-cache</br> provides this service.
+The demo software assumes that if a User is active, then they will continue to be active for some time.  Hence, rather than continually poll the Canada Post API for the full set of credentials, these credentials are maintained in a local cache and purged from the cache in a LRU manner.  The npm component <b>lru-cache</b> provides this service.
 
 ### Fedex / UPS
 The Canada Post API is the prime focus, however, in order to provide a measure of realism, two further Shippers are also 'supported'.  However, both the Fedex and UPS APIs are spoofs in that both are derived from the Canada Post class.
