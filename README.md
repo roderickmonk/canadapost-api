@@ -49,6 +49,7 @@ canadapost-api/
 │
 ├── src/                                * Typescript source code
 │   ├── routes/                         * ExpressJS routing
+│   │    └── shipments.ts               * API reception
 │   │
 │   ├── shippers/                       * ExpressJS routing
 │   │    ├── shipper.ts                 * Base class from which all Shippers are derived
