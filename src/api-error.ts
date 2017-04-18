@@ -1,5 +1,3 @@
-'use strict';
-
 export class ApiError extends Error {
 
 	public message: string;

@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 class ApiError extends Error {
     constructor(message, code = 503) {
         super();
