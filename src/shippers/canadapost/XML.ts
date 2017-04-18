@@ -4,6 +4,7 @@ export class XML {
 
   constructor() { }
 
+// ToDo: template literal substituion for createNonContractShipment
   public static createNonContractShipment = (params) => new Promise((resolve, reject) => {
     resolve(`<?xml version="1.0" encoding="utf-8"?>
 <non-contract-shipment xmlns="http://www.canadapost.ca/ws/ncshipment-v4">

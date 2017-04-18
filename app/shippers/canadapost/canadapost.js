@@ -6,8 +6,6 @@ const shipper_1 = require("../shipper");
 class CanadaPost extends shipper_1.Shipper {
     constructor(credentials) {
         super();
-        this.contract = false;
-        this.contractId = 0;
         this.endpoint = 'https://ct.soa-gw.canadapost.ca';
         this.getRates = (params) => XML_1.XML.getRates(this.customerNumber, params)
             .then(body => request.post({
