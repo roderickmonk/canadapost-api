@@ -30,6 +30,9 @@ router.use((req, res, next) => {
             .then(next)
             .catch(err => errorHandler(err, req, res, next));
     }
+    else {
+        next();
+    }
 });
 router.post('/shipper/:shipperid/rates', (req, res, next) => {
     cache.get(res.app.locals.usershipper)
