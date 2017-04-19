@@ -1,7 +1,6 @@
 import { XML } from './XML';
 import * as request from 'request-promise';
 import * as moment from 'moment';
-import * as builder from 'xmlbuilder';
 import { pd as beautifier } from 'pretty-data';
 import * as xml2js from 'xml2js-es6-promise';
 import { Shipper } from '../shipper';

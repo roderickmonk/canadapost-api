@@ -7,10 +7,11 @@ class UserShipperCache {
     constructor() {
         this.lru = new cache;
         this.set = (userShipper) => new Promise((resolve, reject) => {
-            if (shippers_1.Shippers.hasOwnProperty(userShipper.shipper)) {
-                shippers_1.Shippers[userShipper.shipper].getCredentials(userShipper.registrationToken)
+            const { shipper, registrationToken } = userShipper;
+            if (shippers_1.Shippers.hasOwnProperty(shipper)) {
+                shippers_1.Shippers[shipper].getCredentials(registrationToken)
                     .then(credentials => {
-                    this.lru.set(userShipper, new shippers_1.Shippers[userShipper.shipper](credentials));
+                    this.lru.set(userShipper, new shippers_1.Shippers[shipper](credentials));
                     resolve();
                 });
             }

@@ -13,12 +13,14 @@ export class UserShipperCache {
 
 	public set = (userShipper: UserShipperInterface): Promise<any> => new Promise((resolve, reject) => {
 
+		const { shipper, registrationToken } = userShipper;
+
 		// Ensure that the Shipper Id is known
-		if (Shippers.hasOwnProperty(userShipper.shipper)) {
+		if (Shippers.hasOwnProperty(shipper)) {
 			// Get the User's credentials for the selected Shipper
-			Shippers[userShipper.shipper].getCredentials(userShipper.registrationToken)
+			Shippers[shipper].getCredentials(registrationToken)
 				.then(credentials => {
-					this.lru.set(userShipper, new Shippers[userShipper.shipper](credentials));
+					this.lru.set(userShipper, new Shippers[shipper](credentials));
 					resolve();
 				})
 		}
