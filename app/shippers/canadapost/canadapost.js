@@ -7,7 +7,7 @@ class CanadaPost extends shipper_1.Shipper {
     constructor(credentials) {
         super();
         this.endpoint = 'https://ct.soa-gw.canadapost.ca';
-        this.getRates = (params) => XML_1.XML.getRates(this.customerNumber, params)
+        this.getRates = (params) => XML_1.XML.getRatesBody(this.customerNumber, params)
             .then(body => request.post({
             uri: this.endpoint + '/rs/ship/price',
             headers: {
@@ -18,19 +18,16 @@ class CanadaPost extends shipper_1.Shipper {
             body
         }))
             .then(xml2js);
-        this.createShipment = (params) => XML_1.XML.createNonContractShipment(params)
-            .then(body => {
-            console.log(body);
-            return request.post({
-                uri: `${this.endpoint}/rs/${this.customerNumber}/ncshipment`,
-                headers: {
-                    'Accept': 'application/vnd.cpc.ncshipment-v4+xml',
-                    'Content-Type': 'application/vnd.cpc.ncshipment-v4+xml',
-                    'Authorization': this.authorization
-                },
-                body
-            });
-        })
+        this.createShipment = (params) => XML_1.XML.createNonContractShipmentBody(params)
+            .then(body => request.post({
+            uri: `${this.endpoint}/rs/${this.customerNumber}/ncshipment`,
+            headers: {
+                'Accept': 'application/vnd.cpc.ncshipment-v4+xml',
+                'Content-Type': 'application/vnd.cpc.ncshipment-v4+xml',
+                'Authorization': this.authorization
+            },
+            body
+        }))
             .then(xml2js);
         this.getArtifact = (uri) => request.get({ uri, headers: { 'Accept': 'application/pdf', 'Authorization': this.authorization } });
         this.customerNumber = credentials.customerNumber;

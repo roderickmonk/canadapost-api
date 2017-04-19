@@ -28,35 +28,30 @@ export class CanadaPost extends Shipper {
 
 	public getRates = (params) =>
 
-		XML.getRates(this.customerNumber, params)
-			.then(body => request.post(
-				{
-					uri: this.endpoint + '/rs/ship/price',
-					headers: {
-						'Authorization': this.authorization,
-						'Content-Type': 'application/vnd.cpc.ship.rate-v3+xml',
-						'Accept': 'application/vnd.cpc.ship.rate-v3+xml'
-					},
-					body
-				}))
+		XML.getRatesBody(this.customerNumber, params)
+			.then(body => request.post({
+				uri: this.endpoint + '/rs/ship/price',
+				headers: {
+					'Authorization': this.authorization,
+					'Content-Type': 'application/vnd.cpc.ship.rate-v3+xml',
+					'Accept': 'application/vnd.cpc.ship.rate-v3+xml'
+				},
+				body
+			}))
 			.then(xml2js);
 
 	public createShipment = (params) =>
 
-		XML.createNonContractShipment(params)
-			.then(body => {
-				console.log(body);
-				return request.post(
-					{
-						uri: `${this.endpoint}/rs/${this.customerNumber}/ncshipment`,
-						headers: {
-							'Accept': 'application/vnd.cpc.ncshipment-v4+xml',
-							'Content-Type': 'application/vnd.cpc.ncshipment-v4+xml',
-							'Authorization': this.authorization
-						},
-						body
-					})
-			})
+		XML.createNonContractShipmentBody(params)
+			.then(body => request.post({
+				uri: `${this.endpoint}/rs/${this.customerNumber}/ncshipment`,
+				headers: {
+					'Accept': 'application/vnd.cpc.ncshipment-v4+xml',
+					'Content-Type': 'application/vnd.cpc.ncshipment-v4+xml',
+					'Authorization': this.authorization
+				},
+				body
+			}))
 			.then(xml2js);
 
 	public getArtifact = (uri) => request.get({ uri, headers: { 'Accept': 'application/pdf', 'Authorization': this.authorization } });

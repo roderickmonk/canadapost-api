@@ -3,7 +3,9 @@ const api_error_1 = require("../../api-error");
 class XML {
     constructor() { }
 }
-XML.createNonContractShipment = (params) => Promise.resolve(`<?xml version="1.0" encoding="utf-8"?>
+XML.createNonContractShipmentBody = (params) => new Promise((resolve, reject) => {
+    try {
+        resolve(`<?xml version="1.0" encoding="utf-8"?>
 <non-contract-shipment xmlns="http://www.canadapost.ca/ws/ncshipment-v4">
   <requested-shipping-point>${params['non-contract-shipment']['requested-shipping-point']}</requested-shipping-point>
   <delivery-spec>
@@ -48,7 +50,12 @@ XML.createNonContractShipment = (params) => Promise.resolve(`<?xml version="1.0"
     </preferences>
   </delivery-spec>
 </non-contract-shipment>`);
-XML.getRates = (customerNo, params) => new Promise((resolve, reject) => {
+    }
+    catch (e) {
+        reject(new api_error_1.ApiError('Invalid HTTP body', 400));
+    }
+});
+XML.getRatesBody = (customerNo, params) => new Promise((resolve, reject) => {
     const requiredProperties = ['weight', 'origin-postal-code', 'postal-code'];
     if (requiredProperties.sort().join(',') !== Object.keys(params).sort().join(',')) {
         reject(new api_error_1.ApiError('Invalid HTTP body', 400));

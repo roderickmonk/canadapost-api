@@ -4,9 +4,10 @@ export class XML {
 
   constructor() { }
 
-  public static createNonContractShipment = (params) => Promise.resolve(
+  public static createNonContractShipmentBody = (params) => new Promise((resolve, reject) => {
 
-    `<?xml version="1.0" encoding="utf-8"?>
+    try {
+      resolve(`<?xml version="1.0" encoding="utf-8"?>
 <non-contract-shipment xmlns="http://www.canadapost.ca/ws/ncshipment-v4">
   <requested-shipping-point>${params['non-contract-shipment']['requested-shipping-point']}</requested-shipping-point>
   <delivery-spec>
@@ -51,8 +52,13 @@ export class XML {
     </preferences>
   </delivery-spec>
 </non-contract-shipment>`);
+    }
+    catch (e) {
+      reject(new ApiError('Invalid HTTP body', 400));
+    }
+  });
 
-  public static getRates = (customerNo, params) => new Promise((resolve, reject) => {
+  public static getRatesBody = (customerNo, params) => new Promise((resolve, reject) => {
 
     const requiredProperties = ['weight', 'origin-postal-code', 'postal-code'];
 
