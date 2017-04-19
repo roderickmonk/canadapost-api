@@ -19,15 +19,18 @@ class CanadaPost extends shipper_1.Shipper {
         }))
             .then(xml2js);
         this.createShipment = (params) => XML_1.XML.createNonContractShipment(params)
-            .then(body => request.post({
-            uri: `${this.endpoint}/rs/${this.customerNumber}/ncshipment`,
-            headers: {
-                'Accept': 'application/vnd.cpc.ncshipment-v4+xml',
-                'Content-Type': 'application/vnd.cpc.ncshipment-v4+xml',
-                'Authorization': this.authorization
-            },
-            body
-        }))
+            .then(body => {
+            console.log(body);
+            return request.post({
+                uri: `${this.endpoint}/rs/${this.customerNumber}/ncshipment`,
+                headers: {
+                    'Accept': 'application/vnd.cpc.ncshipment-v4+xml',
+                    'Content-Type': 'application/vnd.cpc.ncshipment-v4+xml',
+                    'Authorization': this.authorization
+                },
+                body
+            });
+        })
             .then(xml2js);
         this.getArtifact = (uri) => request.get({ uri, headers: { 'Accept': 'application/pdf', 'Authorization': this.authorization } });
         this.customerNumber = credentials.customerNumber;

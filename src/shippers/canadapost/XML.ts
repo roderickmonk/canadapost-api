@@ -4,53 +4,53 @@ export class XML {
 
   constructor() { }
 
-// ToDo: template literal substituion for createNonContractShipment
-  public static createNonContractShipment = (params) => new Promise((resolve, reject) => {
-    resolve(`<?xml version="1.0" encoding="utf-8"?>
+  public static createNonContractShipment = (params) => Promise.resolve(
+
+    `<?xml version="1.0" encoding="utf-8"?>
 <non-contract-shipment xmlns="http://www.canadapost.ca/ws/ncshipment-v4">
-  <requested-shipping-point>V3Z4R3</requested-shipping-point>
+  <requested-shipping-point>${params['non-contract-shipment']['requested-shipping-point']}</requested-shipping-point>
   <delivery-spec>
-    <service-code>DOM.EP</service-code>
+    <service-code>${params['non-contract-shipment']['delivery-spec']['service-code']}</service-code>
     <sender>
-      <company>Canada Post Corporation</company>
-      <contact-phone>555-555-5555</contact-phone>
+      <company>${params['non-contract-shipment']['delivery-spec']['sender']['company']}</company>
+      <contact-phone>${params['non-contract-shipment']['delivery-spec']['sender']['contact-phone']}</contact-phone>
       <address-details>
-        <address-line-1>2701 Riverside Drive</address-line-1>
-        <city>Ottawa</city>
-        <prov-state>ON</prov-state>
-        <postal-zip-code>K1A0B1</postal-zip-code>
+        <address-line-1>${params['non-contract-shipment']['delivery-spec']['sender']['address-details']['address-line-1']}</address-line-1>
+        <city>${params['non-contract-shipment']['delivery-spec']['sender']['address-details']['city']}</city>
+        <prov-state>${params['non-contract-shipment']['delivery-spec']['sender']['address-details']['prov-state']}</prov-state>
+        <postal-zip-code>${params['non-contract-shipment']['delivery-spec']['sender']['address-details']['postal-zip-code']}</postal-zip-code>
       </address-details>
     </sender>
     <destination>
-      <name>John Doe</name>
-      <company>Consumer</company>
+      <name>${params['non-contract-shipment']['delivery-spec']['destination']['name']}</name>
+      <company>${params['non-contract-shipment']['delivery-spec']['destination']['company']}</company>
       <address-details>
-        <address-line-1>2701 Receiver Drive</address-line-1>
-        <city>Ottawa</city>
-        <prov-state>ON</prov-state>
-        <country-code>CA</country-code>
-        <postal-zip-code>K1A0B1</postal-zip-code>
+        <address-line-1>${params['non-contract-shipment']['delivery-spec']['destination']['address-details']['address-line-1']}</address-line-1>
+        <city>${params['non-contract-shipment']['delivery-spec']['destination']['address-details']['city']}</city>
+        <prov-state>${params['non-contract-shipment']['delivery-spec']['destination']['address-details']['prov-state']}</prov-state>
+        <country-code>${params['non-contract-shipment']['delivery-spec']['destination']['address-details']['country-code']}</country-code>
+        <postal-zip-code>${params['non-contract-shipment']['delivery-spec']['destination']['address-details']['postal-zip-code']}</postal-zip-code>
       </address-details>
     </destination>
     <options>
       <option>
-        <option-code>DC</option-code>
+        <option-code>${params['non-contract-shipment']['delivery-spec']['options']['option']['option-code']}</option-code>
       </option>
     </options>
     <parcel-characteristics>
-      <weight>15</weight>
+      <weight>${params['non-contract-shipment']['delivery-spec']['parcel-characteristics']['weight']}</weight>
       <dimensions>
-        <length>1</length>
-        <width>1</width>
-        <height>1</height>
+        <length>${params['non-contract-shipment']['delivery-spec']['parcel-characteristics']['dimensions']['length']}</length>
+        <width>${params['non-contract-shipment']['delivery-spec']['parcel-characteristics']['dimensions']['width']}</width>
+        <height>${params['non-contract-shipment']['delivery-spec']['parcel-characteristics']['dimensions']['height']}</height>
       </dimensions>
     </parcel-characteristics>
     <preferences>
-      <show-packing-instructions>true</show-packing-instructions>
+      <show-packing-instructions>
+          ${params['non-contract-shipment']['delivery-spec']['preferences']['show-packing-instructions']}</show-packing-instructions>
     </preferences>
   </delivery-spec>
-</non-contract-shipment>`)
-  });
+</non-contract-shipment>`);
 
   public static getRates = (customerNo, params) => new Promise((resolve, reject) => {
 

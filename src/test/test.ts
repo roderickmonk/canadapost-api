@@ -19,7 +19,7 @@ describe('Test Case', () => {
 		chai.request(server)
 			.post('/shipper/canadapost/rates')
 			.set('x-auth', jwt.encode({ registrationToken: randomInteger() }, JWT_SECRET))
-			// Define a minimum set of params (weight, origin post code, and destination post code)
+			// Define a minimum set of params
 			.send({
 				weight: 1,
 				'origin-postal-code': 'V3Z4R3',
@@ -82,13 +82,11 @@ const testCreateNonContractShipment = {
 					"postal-zip-code": "K1A0B1"
 				}
 			},
-			options: [
-				{
-					option: {
-						"option-code": "DC"
-					}
+			options: {
+				option: {
+					"option-code": "DC"
 				}
-			],
+			},
 			"parcel-characteristics": {
 				weight: 15,
 				dimensions: {

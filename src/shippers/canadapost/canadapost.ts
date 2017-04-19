@@ -44,16 +44,19 @@ export class CanadaPost extends Shipper {
 	public createShipment = (params) =>
 
 		XML.createNonContractShipment(params)
-			.then(body => request.post(
-				{
-					uri: `${this.endpoint}/rs/${this.customerNumber}/ncshipment`,
-					headers: {
-						'Accept': 'application/vnd.cpc.ncshipment-v4+xml',
-						'Content-Type': 'application/vnd.cpc.ncshipment-v4+xml',
-						'Authorization': this.authorization
-					},
-					body
-				}))
+			.then(body => {
+				console.log(body);
+				return request.post(
+					{
+						uri: `${this.endpoint}/rs/${this.customerNumber}/ncshipment`,
+						headers: {
+							'Accept': 'application/vnd.cpc.ncshipment-v4+xml',
+							'Content-Type': 'application/vnd.cpc.ncshipment-v4+xml',
+							'Authorization': this.authorization
+						},
+						body
+					})
+			})
 			.then(xml2js);
 
 	public getArtifact = (uri) => request.get({ uri, headers: { 'Accept': 'application/pdf', 'Authorization': this.authorization } });

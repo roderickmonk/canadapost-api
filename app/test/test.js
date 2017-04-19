@@ -64,13 +64,11 @@ const testCreateNonContractShipment = {
                     "postal-zip-code": "K1A0B1"
                 }
             },
-            options: [
-                {
-                    option: {
-                        "option-code": "DC"
-                    }
+            options: {
+                option: {
+                    "option-code": "DC"
                 }
-            ],
+            },
             "parcel-characteristics": {
                 weight: 15,
                 dimensions: {
