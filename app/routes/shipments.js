@@ -26,22 +26,23 @@ const errorHandler = (err, req, res, next) => {
     }
 };
 router.get('/', (req, res) => {
-    return res.status(200).json('Welcome home, Machoolian');
+    return res.status(200).json('Welcome home!');
 });
-router.use((req, res, next) => {
+router.use((req, res, next) => __awaiter(this, void 0, void 0, function* () {
     res.app.locals.usershipper = {
         shipper: req.path.split('/')[2],
         registrationToken: jwt.decode(req.headers['x-auth'], jwt_secret_1.JWT_SECRET).registrationToken
     };
     if (!cache.has(res.app.locals.usershipper)) {
-        cache.set(res.app.locals.usershipper)
-            .then(next)
-            .catch(err => errorHandler(err, req, res, next));
+        try {
+            yield cache.set(res.app.locals.usershipper);
+        }
+        catch (e) {
+            errorHandler(e, req, res, next);
+        }
     }
-    else {
-        next();
-    }
-});
+    next();
+}));
 router.post('/shipper/:shipperid/rates', (req, res, next) => __awaiter(this, void 0, void 0, function* () {
     try {
         const shipper = yield cache.get(res.app.locals.usershipper);

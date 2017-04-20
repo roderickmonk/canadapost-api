@@ -23,10 +23,10 @@ const errorHandler = (err, req, res, next) => {
 
 router.get('/', (req, res) => {
 
-    return res.status(200).json('Welcome home, Machoolian')
+    return res.status(200).json('Welcome home!');
 });
 
-router.use((req, res, next) => {
+router.use(async (req, res, next) => {
 
     // Take note of the Shipper & Registration Token
     res.app.locals.usershipper = {
@@ -38,12 +38,13 @@ router.use((req, res, next) => {
     if (!cache.has(res.app.locals.usershipper)) {
 
         // Ensure that the User's Shipper is available in the LRU cache
-        cache.set(res.app.locals.usershipper)
-            .then(next)
-            .catch(err => errorHandler(err, req, res, next));
-    } else {
-        next();
+        try {
+            await cache.set(res.app.locals.usershipper);
+        } catch (e) {
+            errorHandler(e, req, res, next);
+        }
     }
+    next();
 });
 
 router.post('/shipper/:shipperid/rates', async (req, res, next) => {
