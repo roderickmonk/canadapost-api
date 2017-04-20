@@ -46,34 +46,37 @@ router.use((req, res, next) => {
     }
 });
 
-router.post('/shipper/:shipperid/rates', (req, res, next) => {
+router.post('/shipper/:shipperid/rates', async (req, res, next) => {
 
     // Retrieve the User's Shipper from the LRU cache and then use it to getRates
-    co(function* () {
-        const shipper = yield cache.get(res.app.locals.usershipper);
-        res.status(200).json(yield shipper.getRates(req.body));
-    })
-        .catch(next);
+    try {
+        const shipper = await cache.get(res.app.locals.usershipper);
+        res.status(200).json(await shipper.getRates(req.body));
+    } catch (e) {
+        next(e);
+    }
 });
 
-router.post('/shipper/:shipperid/shipment', (req, res, next) => {
+router.post('/shipper/:shipperid/shipment', async (req, res, next) => {
 
     // Retrieve the User's Shipper from the LRU cache and then create the new shipment
-    co(function* () {
-        const shipper = yield cache.get(res.app.locals.usershipper);
-        res.status(200).json(yield shipper.createShipment(req.body));
-    })
-        .catch(next);
+    try {
+        const shipper = await cache.get(res.app.locals.usershipper);
+        return res.status(200).json(await shipper.createShipment(req.body));
+    } catch (e) {
+        next(e);
+    }
 });
 
-router.get('/shipper/:shipperid/artifact', (req, res, next) => {
+router.get('/shipper/:shipperid/artifact', async (req, res, next) => {
 
     // Retrieve the User's Shipper from the LRU cache and then get the artifact
-    co(function* () {
-        const shipper = yield cache.get(res.app.locals.usershipper);
-        res.status(200).send(yield shipper.getArtifact(req.body.artifactLink))
-    })
-        .catch(next);
+    try {
+        const shipper = await cache.get(res.app.locals.usershipper);
+        res.status(200).send(await shipper.getArtifact(req.body.artifactLink));
+    } catch (e) {
+        next(e);
+    }
 });
 
 router.use(errorHandler);

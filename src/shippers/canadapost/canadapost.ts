@@ -11,7 +11,7 @@ export class CanadaPost extends Shipper {
 	private customerNumber: string;
 	private endpoint = 'https://ct.soa-gw.canadapost.ca';
 
-	constructor({username, password, customerNumber}) {
+	constructor({ username, password, customerNumber }) {
 
 		super();
 		this.customerNumber = customerNumber;
@@ -26,34 +26,31 @@ export class CanadaPost extends Shipper {
 		customerNumber: '0008545231'
 	});
 
-	public getRates = co.wrap(function* (params) {
+	public getRates = async (params) => 
 
-		return yield request.post({
+		 await request.post({
 			uri: this.endpoint + '/rs/ship/price',
 			headers: {
 				'Authorization': this.authorization,
 				'Content-Type': 'application/vnd.cpc.ship.rate-v3+xml',
 				'Accept': 'application/vnd.cpc.ship.rate-v3+xml'
 			},
-			body: yield XML.getRatesBody(this.customerNumber, params)
+			body: await XML.getRatesBody(this.customerNumber, params)
 		}).then(xml2js);
-	})
 
-	public createShipment = co.wrap(function* (params) {
+	public createShipment = async (params) =>
 
-		return yield request.post({
+		await request.post({
 			uri: `${this.endpoint}/rs/${this.customerNumber}/ncshipment`,
 			headers: {
 				'Accept': 'application/vnd.cpc.ncshipment-v4+xml',
 				'Content-Type': 'application/vnd.cpc.ncshipment-v4+xml',
 				'Authorization': this.authorization
 			},
-			body: yield XML.createNonContractShipmentBody(params)
+			body: await XML.createNonContractShipmentBody(params)
 		}).then(xml2js);
-	})
 
-	public getArtifact = co.wrap(function* (uri) {
-		return yield request.get({ uri, headers: { 'Accept': 'application/pdf', 'Authorization': this.authorization } });
-	});
+	public getArtifact = async (uri) =>
+		await request.get({ uri, headers: { 'Accept': 'application/pdf', 'Authorization': this.authorization } });
 
 }
