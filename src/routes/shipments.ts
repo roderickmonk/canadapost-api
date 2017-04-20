@@ -5,6 +5,7 @@ import * as jwt from 'jwt-simple';
 import { ApiError } from '../api-error';
 import { UserShipperCache } from '../lru-cache';
 import { JWT_SECRET } from '../jwt-secret';
+import * as co from 'co';
 
 const router = express.Router();
 
@@ -23,7 +24,6 @@ const errorHandler = (err, req, res, next) => {
 router.get('/', (req, res) => {
 
     return res.status(200).json('Welcome home, Machoolian')
-
 });
 
 router.use((req, res, next) => {
@@ -49,27 +49,33 @@ router.use((req, res, next) => {
 router.post('/shipper/:shipperid/rates', (req, res, next) => {
 
     // Retrieve the User's Shipper from the LRU cache and then use it to getRates
-    cache.get(res.app.locals.usershipper)
-        .then((shipper: Shipper) => shipper.getRates(req.body))
-        .then(rates => res.status(200).json(rates))
+    co(function* () {
+        const shipper = yield cache.get(res.app.locals.usershipper);
+        const rates = yield shipper.getRates(req.body);
+        res.status(200).json(rates);
+    })
         .catch(next);
 });
 
 router.post('/shipper/:shipperid/shipment', (req, res, next) => {
 
     // Retrieve the User's Shipper from the LRU cache and then create the new shipment
-    cache.get(res.app.locals.usershipper)
-        .then((shipper: Shipper) => shipper.createShipment(req.body))
-        .then(shipment => res.status(200).json(shipment))
+    co(function* () {
+        const shipper = yield cache.get(res.app.locals.usershipper);
+        const shipment = yield shipper.createShipment(req.body);
+        res.status(200).json(shipment);
+    })
         .catch(next);
 });
 
 router.get('/shipper/:shipperid/artifact', (req, res, next) => {
 
     // Retrieve the label artifact from the shipper
-    cache.get(res.app.locals.usershipper)
-        .then((shipper: Shipper) => shipper.getArtifact(req.body.artifactLink))
-        .then(artifact => res.status(200).send(artifact))
+    co(function* () {
+        const shipper = yield cache.get(res.app.locals.usershipper);
+        const artifact = yield shipper.getArtifact(req.body.artifactLink);
+        res.status(200).send(artifact)
+    })
         .catch(next);
 });
 
