@@ -1,11 +1,8 @@
 "use strict";
-const api_error_1 = require("../../api-error");
 class XML {
     constructor() { }
 }
-XML.createNonContractShipmentBody = (params) => new Promise((resolve, reject) => {
-    try {
-        resolve(`<?xml version="1.0" encoding="utf-8"?>
+XML.createNonContractShipmentBody = (params) => `<?xml version="1.0" encoding="utf-8"?>
 <non-contract-shipment xmlns="http://www.canadapost.ca/ws/ncshipment-v4">
   <requested-shipping-point>${params['non-contract-shipment']['requested-shipping-point']}</requested-shipping-point>
   <delivery-spec>
@@ -49,19 +46,8 @@ XML.createNonContractShipmentBody = (params) => new Promise((resolve, reject) =>
           ${params['non-contract-shipment']['delivery-spec']['preferences']['show-packing-instructions']}</show-packing-instructions>
     </preferences>
   </delivery-spec>
-</non-contract-shipment>`);
-    }
-    catch (e) {
-        reject(new api_error_1.ApiError('Invalid HTTP body', 400));
-    }
-});
-XML.getRatesBody = (customerNo, params) => new Promise((resolve, reject) => {
-    const requiredProperties = ['weight', 'origin-postal-code', 'postal-code'];
-    if (requiredProperties.sort().join(',') !== Object.keys(params).sort().join(',')) {
-        reject(new api_error_1.ApiError('Invalid HTTP body', 400));
-    }
-    else {
-        resolve(`<?xml version="1.0" encoding="utf-8"?>
+</non-contract-shipment>`;
+XML.getRatesBody = (customerNo, params) => `<?xml version="1.0" encoding="utf-8"?>
 <mailing-scenario xmlns="http://www.canadapost.ca/ws/ship/rate-v3">
   <customer-number>${customerNo}</customer-number>
   <parcel-characteristics>
@@ -73,7 +59,5 @@ XML.getRatesBody = (customerNo, params) => new Promise((resolve, reject) => {
       <postal-code>${params['origin-postal-code']}</postal-code>
     </domestic>
   </destination>
-</mailing-scenario>`);
-    }
-});
+</mailing-scenario>`;
 exports.XML = XML;

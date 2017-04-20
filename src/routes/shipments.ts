@@ -28,23 +28,26 @@ router.get('/', (req, res) => {
 
 router.use(async (req, res, next) => {
 
-    // Take note of the Shipper & Registration Token
-    res.app.locals.usershipper = {
-        shipper: req.path.split('/')[2],
-        registrationToken: jwt.decode(req.headers['x-auth'], JWT_SECRET).registrationToken
-    };
+    try {
+        // Take note of the Shipper & Registration Token
+        res.app.locals.usershipper = {
+            shipper: req.path.split('/')[2],
+            registrationToken: jwt.decode(req.headers['x-auth'], JWT_SECRET).registrationToken
+        };
 
-    // If the User's Shipper already exists in the cache, then there is nothing more to do
-    if (!cache.has(res.app.locals.usershipper)) {
+        // If the User's Shipper already exists in the cache, then there is nothing more to do
+        if (!cache.has(res.app.locals.usershipper)) {
 
-        // Ensure that the User's Shipper is available in the LRU cache
-        try {
+            // Ensure that the User's Shipper is available in the LRU cache
             await cache.set(res.app.locals.usershipper);
-        } catch (e) {
-            errorHandler(e, req, res, next);
+
         }
+
+        next();
+        
+    } catch (e) {
+        errorHandler(e, req, res, next);
     }
-    next();
 });
 
 router.post('/shipper/:shipperid/rates', async (req, res, next) => {

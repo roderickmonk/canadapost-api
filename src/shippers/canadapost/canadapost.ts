@@ -26,16 +26,16 @@ export class CanadaPost extends Shipper {
 		customerNumber: '0008545231'
 	});
 
-	public getRates = async (params) => 
+	public getRates = async (params) =>
 
-		 await request.post({
+		await request.post({
 			uri: this.endpoint + '/rs/ship/price',
 			headers: {
 				'Authorization': this.authorization,
 				'Content-Type': 'application/vnd.cpc.ship.rate-v3+xml',
 				'Accept': 'application/vnd.cpc.ship.rate-v3+xml'
 			},
-			body: await XML.getRatesBody(this.customerNumber, params)
+			body: XML.getRatesBody(this.customerNumber, params)
 		}).then(xml2js);
 
 	public createShipment = async (params) =>
@@ -47,7 +47,7 @@ export class CanadaPost extends Shipper {
 				'Content-Type': 'application/vnd.cpc.ncshipment-v4+xml',
 				'Authorization': this.authorization
 			},
-			body: await XML.createNonContractShipmentBody(params)
+			body: XML.createNonContractShipmentBody(params)
 		}).then(xml2js);
 
 	public getArtifact = async (uri) =>

@@ -23,7 +23,7 @@ class CanadaPost extends shipper_1.Shipper {
                     'Content-Type': 'application/vnd.cpc.ship.rate-v3+xml',
                     'Accept': 'application/vnd.cpc.ship.rate-v3+xml'
                 },
-                body: yield XML_1.XML.getRatesBody(this.customerNumber, params)
+                body: XML_1.XML.getRatesBody(this.customerNumber, params)
             }).then(xml2js);
         });
         this.createShipment = (params) => __awaiter(this, void 0, void 0, function* () {
@@ -34,7 +34,7 @@ class CanadaPost extends shipper_1.Shipper {
                     'Content-Type': 'application/vnd.cpc.ncshipment-v4+xml',
                     'Authorization': this.authorization
                 },
-                body: yield XML_1.XML.createNonContractShipmentBody(params)
+                body: XML_1.XML.createNonContractShipmentBody(params)
             }).then(xml2js);
         });
         this.getArtifact = (uri) => __awaiter(this, void 0, void 0, function* () { return yield request.get({ uri, headers: { 'Accept': 'application/pdf', 'Authorization': this.authorization } }); });
