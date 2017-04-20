@@ -38,24 +38,21 @@ router.use((req, res, next) => {
 router.post('/shipper/:shipperid/rates', (req, res, next) => {
     co(function* () {
         const shipper = yield cache.get(res.app.locals.usershipper);
-        const rates = yield shipper.getRates(req.body);
-        res.status(200).json(rates);
+        res.status(200).json(yield shipper.getRates(req.body));
     })
         .catch(next);
 });
 router.post('/shipper/:shipperid/shipment', (req, res, next) => {
     co(function* () {
         const shipper = yield cache.get(res.app.locals.usershipper);
-        const shipment = yield shipper.createShipment(req.body);
-        res.status(200).json(shipment);
+        res.status(200).json(yield shipper.createShipment(req.body));
     })
         .catch(next);
 });
 router.get('/shipper/:shipperid/artifact', (req, res, next) => {
     co(function* () {
         const shipper = yield cache.get(res.app.locals.usershipper);
-        const artifact = yield shipper.getArtifact(req.body.artifactLink);
-        res.status(200).send(artifact);
+        res.status(200).send(yield shipper.getArtifact(req.body.artifactLink));
     })
         .catch(next);
 });
