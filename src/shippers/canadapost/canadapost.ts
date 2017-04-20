@@ -1,10 +1,8 @@
 import { XML } from './XML';
 import * as request from 'request-promise';
 import * as moment from 'moment';
-import { pd as beautifier } from 'pretty-data';
 import * as xml2js from 'xml2js-es6-promise';
 import { Shipper } from '../shipper';
-import * as co from 'co';
 
 export class CanadaPost extends Shipper {
 

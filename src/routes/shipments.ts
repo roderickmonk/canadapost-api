@@ -5,7 +5,6 @@ import * as jwt from 'jwt-simple';
 import { ApiError } from '../api-error';
 import { UserShipperCache } from '../lru-cache';
 import { JWT_SECRET } from '../jwt-secret';
-import * as co from 'co';
 
 const router = express.Router();
 
@@ -44,7 +43,7 @@ router.use(async (req, res, next) => {
         }
 
         next();
-        
+
     } catch (e) {
         errorHandler(e, req, res, next);
     }
